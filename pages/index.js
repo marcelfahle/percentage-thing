@@ -19,6 +19,13 @@ class Index extends React.Component {
     this.setState({ percent: val });
   }
 
+  round(number, precision) {
+    var factor = Math.pow(10, precision);
+    var tempNumber = number * factor;
+    var roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+  }
+
   updateVal(idx, e) {
     const vals = this.state.vals;
     this.setState({
@@ -33,7 +40,7 @@ class Index extends React.Component {
     const vals = this.state.vals;
     var i = 0;
     const newVals = this.state.vals.map((v, i) => {
-      return Math.round(v * this.state.percent / 100);
+      return round(v * this.state.percent / 100, 2);
     });
     this.setState({ vals: newVals });
   }
@@ -80,8 +87,9 @@ class Index extends React.Component {
               <div className="res">
                 <input
                   type="text"
-                  value={Math.round(
-                    this.state.vals[i] * this.state.percent / 100
+                  value={this.round(
+                    this.state.vals[i] * this.state.percent / 100,
+                    2
                   )}
                   readOnly
                 />
